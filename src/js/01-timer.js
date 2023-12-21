@@ -24,6 +24,6 @@ const options = {
 
 flatpickr(input, options);
 
-console.log(options.onClose);
+
 
 
