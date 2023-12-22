@@ -1,5 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 const input = document.querySelector("#datetime-picker");
 const button = document.querySelector("[data-start]");
@@ -17,7 +19,10 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
-      alert("Please choose a date in the future");
+      iziToast.show({
+        title: 'Hey',
+        message: 'What would you like to add?'
+});
       button.setAttribute("disabled", true); return
     } else {
         button.removeAttribute("disabled");
@@ -65,6 +70,7 @@ function updateTimerFace({ days, hours, minutes, seconds }) {
   timerFieldSeconds.textContent = addLeadingZero(seconds);
 }
 button.addEventListener("click", onTimerStart);
+
 
 
 
