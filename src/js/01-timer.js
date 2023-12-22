@@ -2,7 +2,13 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const input = document.querySelector("#datetime-picker");
-const button = document.querySelector("button");
+const button = document.querySelector("[data-start]");
+const timerFieldDays = document.querySelector("[data-days]");
+const timerFieldHours = document.querySelector("[data-hours]");
+const timerFieldMinutes = document.querySelector("[data-minutes]");
+const timerFieldSeconds = document.querySelector("[data-seconds]");
+
+let userSelectedDate = null;
 
 const options = {
   enableTime: true,
@@ -11,20 +17,13 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
-      window.alert("Please choose a date in the future");
+      alert("Please choose a date in the future");
       button.setAttribute("disabled", true); return
     } else {
         button.removeAttribute("disabled");
     }
   },
 };
-
-const datePicker = flatpickr(input, options);
-let userSelectedDate = datePicker.selectedDates[0];
-
-let timeDifference = new Date() - datePicker.selectedDates[0];
-
-console.log(timeDifference);
 
 function convertMs(ms) {
   const second = 1000;
@@ -39,6 +38,34 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
+
+const datePicker = flatpickr(input, options);
+
+function addLeadingZero(value) {
+  return String(value).padStart(2, 0);
+}
+
+function onTimerStart() {
+  const selectedDate = datePicker.selectedDates[0];
+
+  userSelectedDate = setInterval(() => {
+    const countdown = selectedDate - new Date();
+    if (countdown < 0) {
+      clearInterval(userSelectedDate);
+      return;
+    }
+    updateTimerFace(convertMs(countdown));
+  }, 1000);
+}
+
+function updateTimerFace({ days, hours, minutes, seconds }) {
+  timerFieldDays.textContent = addLeadingZero(days);
+  timerFieldHours.textContent = addLeadingZero(hours);
+  timerFieldMinutes.textContent = addLeadingZero(minutes);
+  timerFieldSeconds.textContent = addLeadingZero(seconds);
+}
+button.addEventListener("click", onTimerStart);
+
 
 
 
