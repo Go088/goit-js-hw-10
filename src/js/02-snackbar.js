@@ -7,9 +7,7 @@ const rejectRadio = document.querySelector('input[value="rejected"]');
 const input = document.querySelector('input[name="delay"]');
 
 
-form.addEventListener("submit", onSubmitForm);
-
-function onSubmitForm(event) {
+form.addEventListener("submit", event => {
     event.preventDefault();
     const delay = parseInt(input.value);
     
@@ -40,4 +38,6 @@ function onSubmitForm(event) {
         messageColor: "#FFF"
 });
     });
-};
+});
+
+    
