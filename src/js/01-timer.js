@@ -20,8 +20,12 @@ const options = {
   onClose(selectedDates) {
     if (selectedDates[0] < new Date()) {
       iziToast.show({
-        title: 'Hey',
-        message: 'What would you like to add?'
+        message: "Please choose a date in the future",
+        position: "topCenter",
+        messageSize: "16",
+        backgroundColor: "#EF4040",
+        messageColor: "#FFF",
+        iconColor: "#FFF"
 });
       button.setAttribute("disabled", true); return
     } else {
