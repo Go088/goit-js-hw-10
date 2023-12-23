@@ -1,48 +1,43 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-// const form = document.querySelector('.form');
+const form = document.querySelector('.form');
+const fulfillRadio = document.querySelector('input[value="fulfilled"]');
+const rejectRadio = document.querySelector('input[value="rejected"]');
+const input = document.querySelector('input[name="delay"]');
 
-// form.addEventListener('submit', onSubmitForm);
 
-// function onSubmitForm(event) {
-//   event.preventDefault();
-//   const { delay, step, amount } = event.currentTarget.elements;
+form.addEventListener("submit", onSubmitForm);
 
-//   if (delay.value < 0 || step.value < 0 || amount.value < 0) {
-//     Notiflix.Notify.warning(`❗ Please enter a positive number`);
-//   } else {
-//     for (let i = 0; i < amount.value; i++) {
-//       let position = i + 1;
-//       const delays = Number(delay.value) + step.value * i;
+function onSubmitForm(event) {
+    event.preventDefault();
+    const delay = parseInt(input.value);
+    
+    const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (fulfillRadio.checked) {
+                resolve (delay)
+            } else if (rejectRadio.checked) {
+                reject (delay)
+            }
+        }, delay);
+    })
 
-//       createPromise(position, delays)
-//         .then(({ position, delay }) => {
-//           Notiflix.Notify.success(
-//             `✅ Fulfilled promise ${position} in ${delay}ms`
-//           );
-//         })
-//         .catch(({ position, delay }) => {
-//           Notiflix.Notify.failure(
-//             `❌ Rejected promise ${position} in ${delay}ms`
-//           );
-//         });
-//     }
-//   }
-
-//   event.currentTarget.reset();
-// }
-
-// function createPromise(position, delay) {
-//   return new Promise((resolve, reject) => {
-//     const shouldResolve = Math.random() > 0.3;
-
-//     setTimeout(() => {
-//       if (shouldResolve) {
-//         resolve({ position, delay });
-//       } else {
-//         reject({ position, delay });
-//       }
-//     }, delay);
-//   });
-// }
+    promise.then((delay) => {
+        iziToast.show({
+        message: `✅ Fulfilled promise in ${delay}ms`,
+        position: "topCenter",
+        messageSize: "16",
+        backgroundColor: "#59A10D",
+        messageColor: "#FFF"
+});
+    }).catch((delay) => {
+        iziToast.show({
+        message: `❌ Rejected promise in ${delay}ms`,
+        position: "topCenter",
+        messageSize: "16",
+        backgroundColor: "#EF4040",
+        messageColor: "#FFF"
+});
+    });
+};

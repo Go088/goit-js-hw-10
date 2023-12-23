@@ -25,7 +25,6 @@ const options = {
         messageSize: "16",
         backgroundColor: "#EF4040",
         messageColor: "#FFF",
-        iconColor: "#FFF"
 });
       button.setAttribute("disabled", true); return
     } else {
