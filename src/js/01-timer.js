@@ -26,9 +26,9 @@ const options = {
         backgroundColor: "#EF4040",
         messageColor: "#FFF",
 });
-      button.setAttribute("disabled", true); return
+      button.disabled = true; return
     } else {
-        button.removeAttribute("disabled");
+      button.disabled = false;
     }
   },
 };
@@ -64,6 +64,7 @@ function onTimerStart() {
     }
     updateTimerFace(convertMs(countdown));
   }, 1000);
+  button.disabled = true;
 }
 
 function updateTimerFace({ days, hours, minutes, seconds }) {
