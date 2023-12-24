@@ -6,22 +6,20 @@ const fulfillRadio = document.querySelector('input[value="fulfilled"]');
 const rejectRadio = document.querySelector('input[value="rejected"]');
 const input = document.querySelector('input[name="delay"]');
 
-
 form.addEventListener("submit", event => {
     event.preventDefault();
     const delay = parseInt(input.value);
     
     const promise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            if (fulfillRadio.checked) {
-                resolve (delay)
-            } else if (rejectRadio.checked) {
-                reject (delay)
-            }
-        }, delay);
-    })
+        if (fulfillRadio.checked) {
+            resolve()
+        } else if (rejectRadio.checked) {
+            reject()
+        }
+    });
 
-    promise.then((delay) => {
+    setTimeout(() => {
+        promise.then(() => {
         iziToast.show({
         message: `✅ Fulfilled promise in ${delay}ms`,
         position: "topRight",
@@ -29,7 +27,7 @@ form.addEventListener("submit", event => {
         backgroundColor: "#59A10D",
         messageColor: "#FFF"
 });
-    }).catch((delay) => {
+    }).catch(() => {
         iziToast.show({
         message: `❌ Rejected promise in ${delay}ms`,
         position: "topRight",
@@ -38,6 +36,9 @@ form.addEventListener("submit", event => {
         messageColor: "#FFF"
 });
     });
+    }, delay);
+    
+    form.reset(); 
 });
 
     
