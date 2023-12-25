@@ -10,6 +10,8 @@ const timerFieldHours = document.querySelector("[data-hours]");
 const timerFieldMinutes = document.querySelector("[data-minutes]");
 const timerFieldSeconds = document.querySelector("[data-seconds]");
 
+button.disabled = true;
+
 let userSelectedDate = null;
 
 const options = {
